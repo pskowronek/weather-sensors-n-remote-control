@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  influxdb:
+    image: mendhak/arm32v6-influxdb
+    container_name: influxdb
+    volumes:
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - /var/data/influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10240k"
+        max-file: "10"
+    environment:
+# this influxdb image apparently doesn't support automagical user creation...
+#      - AUTH_ENABLED=true
+#      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=changeme
+    restart: unless-stopped
+#  grafana:
+#    image: grafana/grafana:7.3.6
+#    container_name: grafana
+#    links:
+#      - influxdb
+#    volumes:
+#      - /var/data/grafana-data:/var/lib/grafana
+#      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+#    ports:
+#      - "3000:3000"
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10240k"
+#        max-file: "10"
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=<changeme>
+#    restart: unless-stopped
+

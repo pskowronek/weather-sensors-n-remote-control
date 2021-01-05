@@ -19,7 +19,13 @@
 
 #define NETWORK_ID    1
 #define THIS_NODE_ID  2
+// A short name that could be used for data visualization, use alphanumeric & us-ascii only, don't use commas!
+// Please do remember that the whole packet max data size is 61 bytes and it must accomodate sensor readings.
+#define THIS_NODE_NAME "hall"
 #define GATEWAY_ID    1
+
+// A packet format: nm -> name, t -> temp*10, p -> pressure (hPa), h -> humidity, v -> voltage (mV), r -> last RSSI
+#define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,v:%d,r:%d"
 
 // RFM69 frequency
 #define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
@@ -66,6 +72,8 @@ BME280 bme;
 int transmitCounter = 0;
 // Whether to turn off the switch (after 2 full deep sleeps i.e. 16s)
 byte turnOffCountDown = 0;
+// Last RSSI
+int lastRSSI = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -155,19 +163,19 @@ void transmitMeasurements() {
     radio.send(GATEWAY_ID, buffer, strlen(buffer));
     Serial.println(F("Data sent w/o requesting ACK"));
   }
+  lastRSSI = radio.readRSSI(false);
   Serial.flush();
 }
 
 void fillMeasurements(char* buffer) {
   bme.setMode(MODE_FORCED);
-  sprintf(buffer, "%d,%d,%d,%d,%d,%d,%d",
-      NETWORK_ID,
-      THIS_NODE_ID,
+  sprintf(buffer, PACKET_FORMAT,
+      THIS_NODE_NAME,
       (int)(bme.readTempC()*10),
       (int)(bme.readFloatPressure() / 100.0F),
       (int)bme.readFloatHumidity(),
       (int)readVcc(),
-      (int)radio.RSSI); 
+      (int)lastRSSI); 
   bme.setMode(MODE_SLEEP);
   Serial.print(F("Got the following measurements: "));
   Serial.println(buffer);

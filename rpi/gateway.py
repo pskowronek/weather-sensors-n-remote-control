@@ -57,35 +57,26 @@ def main():
                 logging.info("Got packet!")
                 logging.debug(packet)
                 data = bytearray(packet.data).decode()
-                # TODO better parsing etc
-                data_parts = data.split(',')
-                data_network_id = int(data_parts[0])
-                data_node_id = int(data_parts[1])
-                data_temp = int(data_parts[2]) / 10   # temp was *10 to avoid doing float -> str on arduino side
-                data_press = int(data_parts[3])
-                data_humi = int(data_parts[4])
-                data_voltage = int(data_parts[5]) / 1000  # mV to V
-                data_rssi = int(data_parts[6])      # last known RSSI, most often zero - to be fixed on Arduino side
-                if data_node_id != packet.sender:
-                    logging.info("Got mismatched packet - node configured as {} but sent from {}!".format(data_node_id, packet.sender))
+                data_dict = dict(x.split(':') for x in data.split(','))
                 points = [{
                     'measurement': 'readings',
                     'time': datetime.datetime.utcnow(),
                     'tags': {
-                        'network': data_network_id,
-                        'node': data_node_id
+                        'network': network_id,
+                        'node': packet.sender,
+                        'name': data_dict.get('nm', str(packet.sender))
                     },
                     'fields': {
-                        'temp': data_temp,
-                        'pressure': data_press,
-                        'humidity': data_humi,
-                        'voltage': data_voltage,
-                        'rssi-node': data_rssi,
-                        'rssi-gw': packet.rssi
+                        'temp': int(data_dict.get('t', 0)) / 10,  # temp was *10 to avoid doing float -> str on arduino side
+                        'pressure': int(data_dict.get('p', 0)),
+                        'humidity': int(data_dict.get('h', 0)),
+                        'voltage': int(data_dict.get('v')) / 1000,  # mV to V
+                        'rssi-node': int(data_dict.get('r'), 0),  # last known RSSI as seen on node side
+                        'rssi-gw': packet.RSSI
                     }
                 }]
                 client.write_points(points)
-                logging.info("Data sent to db!")
+                logging.info("Readings data sent to db!")
 
 
 def signal_hook(*args):

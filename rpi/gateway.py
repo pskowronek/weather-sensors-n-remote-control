@@ -69,7 +69,7 @@ def main():
                     'fields': {
                         'temp': int(data_dict.get('t', 0)) / 10,  # temp was *10 to avoid doing float -> str on arduino side
                         'pressure': int(data_dict.get('p', 0)),
-                        'humidity': int(data_dict.get('h', 0)),
+                        'humidity': float(data_dict.get('h', 0)),
                         'voltage': int(data_dict.get('v')) / 1000,  # mV to V
                         'rssi-node': int(data_dict.get('r'), 0),  # last known RSSI as seen on node side
                         'rssi-gw': packet.RSSI

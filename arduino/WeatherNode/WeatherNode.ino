@@ -69,7 +69,7 @@ RFM69 radio;
 BME280 bme;
 
 // A counter used to know when to transmit
-int transmitCounter = 0;
+int transmitCounter = SEND_EVERY_N_8S; // start transmission when it is powered up (ie after 8s of sleep) - to verify if it works w/o waiting too much time.
 // Whether to turn off the switch (after 2 full deep sleeps i.e. 16s)
 byte turnOffCountDown = 0;
 // Last RSSI

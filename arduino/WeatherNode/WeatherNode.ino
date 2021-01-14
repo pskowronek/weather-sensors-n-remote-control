@@ -1,6 +1,14 @@
 /** 
  * Weather node with remote control capability.
  * 
+ * The node should have the following modules connected:
+ * - RMF69 for connectivity
+ * - BME280 for temperature & humidity
+ * - TSL2561 for luminosity (optionally, if USE_LUMI_SENSOR defined below).
+ *   Mind that this enhances power consumption (adds 100ms of 0.5mA consumption during measurements)
+ * 
+ * See more details under: https://github.com/pskowronek/weather-sensors-n-remote-control
+ * 
  * Author: Piotr Skowronek, piotr@skowro.net
  * License: Apache License, version 2.0
  * 
@@ -9,12 +17,18 @@
  * BME280 Example - https://github.com/LowPowerLab/RFM69/blob/master/Examples/WeatherNode/WeatherNode.ino
  */
 
-
+#define USE_LUMI_SENSOR
 
 #include <RFM69.h>
 #include <SPI.h>
 #include <LowPower.h>
 #include <SparkFunBME280.h>
+
+// whether TSL2561 lumi sensor is attached
+#ifdef USE_LUMI_SENSOR
+  #include <Adafruit_Sensor.h>
+  #include <Adafruit_TSL2561_U.h>
+#endif
 
 
 #define NETWORK_ID    1
@@ -24,8 +38,8 @@
 #define THIS_NODE_NAME "hall"
 #define GATEWAY_ID    1
 
-// A packet format: nm -> name, t -> temp*10, p -> pressure (hPa), h -> humidity, v -> voltage (mV), r -> last RSSI
-#define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,v:%d,r:%d"
+// A packet format: nm -> name, t -> temp*10, p -> pressure (hPa), h -> humidity, l -> lux, v -> voltage (mV), r -> last RSSI
+#define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,l:%d,v:%d,r:%d"
 
 // RFM69 frequency
 #define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
@@ -68,6 +82,11 @@ RFM69 radio;
 // BME280 sensor
 BME280 bme;
 
+// TSL2561 lumi sensor
+#ifdef USE_LUMI_SENSOR
+Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
+#endif
+
 // A counter used to know when to transmit
 int transmitCounter = SEND_EVERY_N_8S; // start transmission when it is powered up (ie after 8s of sleep) - to verify if it works w/o waiting too much time.
 // Whether to turn off the switch (after 2 full deep sleeps i.e. 16s)
@@ -87,6 +106,9 @@ void setup() {
 
   initBme280();
   initRadio();
+  #ifdef USE_LUMI_SENSOR
+  initLumi();
+  #endif
 }
 
 void loop() {
@@ -168,14 +190,24 @@ void transmitMeasurements() {
 }
 
 void fillMeasurements(char* buffer) {
+  int lumi = -1;
+  #ifdef USE_LUMI
+    sensors_event_t event;
+    tsl.getEvent(&event);
+    tsl.disable();
+    if (event.light) {
+      lumi = event.light;
+    }
+  #endif
   bme.setMode(MODE_FORCED);
   sprintf(buffer, PACKET_FORMAT,
       THIS_NODE_NAME,
       (int)(bme.readTempC()*10),
       (int)(bme.readFloatPressure() / 100.0F),
       (int)bme.readFloatHumidity(),
+      lumi,
       (int)readVcc(),
-      (int)lastRSSI); 
+      lastRSSI); 
   bme.setMode(MODE_SLEEP);
   Serial.print(F("Got the following measurements: "));
   Serial.println(buffer);
@@ -204,6 +236,16 @@ void initBme280() {
   bme.setHumidityOverSample(1);
   bme.setMode(MODE_SLEEP);
 }
+
+#ifdef USE_LUMI_SENSOR
+void initLumi() {
+  tsl.enableAutoRange(true);
+  tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);  /* medium resolution and speed   */
+  if (!tsl.begin()) {   // module is automatically put into low-power mode
+    Serial.print(F("Lumi sensor not found!"));
+  }
+}
+#endif
 
 // Read input voltage (battery status),
 // taken from: https://www.instructables.com/Secret-Arduino-Voltmeter/ + https://code.google.com/archive/p/tinkerit/wikis/SecretVoltmeter.wiki

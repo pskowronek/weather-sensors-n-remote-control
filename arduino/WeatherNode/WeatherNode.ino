@@ -42,7 +42,9 @@
 #define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,l:%d,v:%d,r:%d"
 
 // RFM69 frequency
-#define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
+#define RFM_FREQUENCY     RF69_433MHZ // or RF69_915MHZ
+// RFM69 mode - rfm69hw is high-power (and you can lower the power output), rfm69cw is NOT high-power and you have to set it to false
+#define RFM_HIGH_POWER true
 
 // AES encryption (or not):
 #define ENCRYPT       true // Set to "true" to use encryption
@@ -191,10 +193,9 @@ void transmitMeasurements() {
 
 void fillMeasurements(char* buffer) {
   int lumi = -1;
-  #ifdef USE_LUMI
+  #ifdef USE_LUMI_SENSOR
     sensors_event_t event;
     tsl.getEvent(&event);
-    tsl.disable();
     if (event.light) {
       lumi = event.light;
     }
@@ -215,8 +216,8 @@ void fillMeasurements(char* buffer) {
 }
 
 void initRadio() {
-  radio.initialize(FREQUENCY, THIS_NODE_ID, NETWORK_ID);
-  radio.setHighPower(true);
+  radio.initialize(RFM_FREQUENCY, THIS_NODE_ID, NETWORK_ID);
+  radio.setHighPower(RFM_HIGH_POWER);
   if (ENCRYPT) {
     radio.encrypt(ENCRYPT_KEY);
   }
@@ -242,7 +243,7 @@ void initLumi() {
   tsl.enableAutoRange(true);
   tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);  /* medium resolution and speed   */
   if (!tsl.begin()) {   // module is automatically put into low-power mode
-    Serial.print(F("Lumi sensor not found!"));
+    Serial.print(F("Lumi sensor not found! Going to continue nevertheless..."));
   }
 }
 #endif

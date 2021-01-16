@@ -3,12 +3,13 @@ from influxdb import InfluxDBClient
 import atexit
 
 import datetime
-import os
-import sys
+import json
 import logging
 import logging.handlers
+import os
 import sdnotify
 import signal
+import sys
 import time
 
 
@@ -55,7 +56,7 @@ def main():
             # Process packets
             for packet in radio.get_packets():
                 logging.info("Got packet!")
-                logging.debug(packet)
+                logging.debug("Raw packet data: %s", packet);
                 data = bytearray(packet.data).decode()
                 data_dict = dict(x.split(':') for x in data.split(','))
                 points = [{
@@ -77,6 +78,7 @@ def main():
                     }
                 }]
                 client.write_points(points)
+                logging.debug("Decoded data: %s", json.dumps(points))
                 logging.info("Readings data sent to db!")
 
 

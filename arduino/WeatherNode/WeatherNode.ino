@@ -1,11 +1,11 @@
 /** 
- * Weather node with remote control capability.
+ * Weather node with optional remote control capability.
  * 
  * The node should have the following modules connected:
- * - RMF69 for connectivity
+ * - RFM69 for connectivity
  * - BME280 for temperature & humidity
  * - TSL2561 for luminosity (optionally, if USE_LUMI_SENSOR defined below).
- *   Mind that this enhances power consumption (adds 100ms of 0.5mA consumption during measurements)
+ *   Mind that this increases power consumption (adds ~100ms of ~0.5mA consumption during periodical measurements)
  * 
  * See more details under: https://github.com/pskowronek/weather-sensors-n-remote-control
  * 
@@ -43,7 +43,7 @@
 
 // RFM69 frequency
 #define RFM_FREQUENCY     RF69_433MHZ // or RF69_915MHZ
-// RFM69 mode - rfm69hw is high-power (and you can lower the power output), rfm69cw is NOT high-power and you have to set it to false
+// RFM69 mode - rfm69hw is high-power (and you can lower the power output by setting it to false), rfm69cw is NOT high-power and you have to set it to false!
 #define RFM_HIGH_POWER true
 
 // AES encryption (or not):

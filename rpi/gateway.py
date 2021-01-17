@@ -78,7 +78,7 @@ def main():
                     }
                 }]
                 client.write_points(points)
-                logging.debug("Decoded data: %s", json.dumps(points))
+                logging.debug("Decoded data: %s", json.dumps(points, default=str))
                 logging.info("Readings data sent to db!")
 
 

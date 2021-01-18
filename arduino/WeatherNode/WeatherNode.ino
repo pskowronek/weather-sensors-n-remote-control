@@ -141,6 +141,9 @@ void loop() {
   }
   if (transmitCounter > SEND_EVERY_N_8S) {
     transmitCounter = 0;
+    if (RC_RECAL) {
+      radio.rcCalibration();
+    }
     transmitMeasurements();
   }
   Serial.println(F("Going to power down for ~8s..."));

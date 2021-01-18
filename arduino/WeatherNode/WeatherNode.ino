@@ -17,12 +17,19 @@
  * BME280 Example - https://github.com/LowPowerLab/RFM69/blob/master/Examples/WeatherNode/WeatherNode.ino
  */
 
+// whether TSL2561 lumi sensor is connected
 #define USE_LUMI_SENSOR
+// whether to unleash built-in watchdog to reboot when it appears the device is not responding (transmitting)
+#define WATCHDOG      true
 
 #include <RFM69.h>
 #include <SPI.h>
 #include <LowPower.h>
 #include <SparkFunBME280.h>
+
+#ifdef WATCHDOG
+  #include <avr/wdt.h>
+#endif
 
 // whether TSL2561 lumi sensor is attached
 #ifdef USE_LUMI_SENSOR
@@ -42,9 +49,12 @@
 #define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,l:%d,v:%d,r:%d"
 
 // RFM69 frequency
-#define RFM_FREQUENCY     RF69_433MHZ // or RF69_915MHZ
+#define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
 // RFM69 mode - rfm69hw is high-power (and you can lower the power output by setting it to false), rfm69cw is NOT high-power and you have to set it to false!
-#define RFM_HIGH_POWER true
+#define HIGH_POWER    true
+// RFM69 force RC recalibration before transmission (when transmitter is outside and freezing temps are expected)
+// in other words: when amb. temperature difference between transmitter and receiver is substantial (more than >20'C)
+#define RC_RECAL      true
 
 // AES encryption (or not):
 #define ENCRYPT       true // Set to "true" to use encryption
@@ -114,10 +124,29 @@ void setup() {
 }
 
 void loop() {
+
+#ifdef WATCHDOG
+  wdt_enable(WDTO_1S);
+#endif
+  if (ACCEPT_COMMANDS) {
+    if (turnOffCountDown > 0) {
+      turnOffCountDown--;
+    }
+    if (RC_RECAL) {
+      radio.rcCalibration();
+    }
+    handleReceives(); // wake up radio and check if something is received
+    LowPower.powerDown(SLEEP_120MS, ADC_OFF, BOD_OFF);  // briefly power down with radio on to let it catch something :)
+    handleReceives(); // re-check if something was received
+  }
   if (transmitCounter > SEND_EVERY_N_8S) {
     transmitCounter = 0;
     transmitMeasurements();
   }
+#ifdef WATCHDOG
+  wdt_reset();
+  wdt_disable();
+#endif
   Serial.println(F("Going to power down for ~8s..."));
   Serial.flush();
   radio.sleep();
@@ -125,14 +154,7 @@ void loop() {
   Serial.flush();
   Serial.println(F("Awaken!"));
   Serial.flush();
-  if (ACCEPT_COMMANDS) {
-    if (turnOffCountDown > 0) {
-      turnOffCountDown--;
-    }
-    handleReceives(); // wake up radio and check if something is received
-    LowPower.powerDown(SLEEP_120MS, ADC_OFF, BOD_OFF);  // briefly power down with radio on to let it catch something :)
-    handleReceives(); // re-check if something was received
-  }
+
   transmitCounter++;  
 }
 
@@ -216,8 +238,8 @@ void fillMeasurements(char* buffer) {
 }
 
 void initRadio() {
-  radio.initialize(RFM_FREQUENCY, THIS_NODE_ID, NETWORK_ID);
-  radio.setHighPower(RFM_HIGH_POWER);
+  radio.initialize(FREQUENCY, THIS_NODE_ID, NETWORK_ID);
+  radio.setHighPower(HIGH_POWER);
   if (ENCRYPT) {
     radio.encrypt(ENCRYPT_KEY);
   }

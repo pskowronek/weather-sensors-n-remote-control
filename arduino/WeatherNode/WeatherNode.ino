@@ -20,7 +20,7 @@
 // whether TSL2561 lumi sensor is connected
 #define USE_LUMI_SENSOR
 // whether to unleash built-in watchdog to reboot when it appears the device is not responding (transmitting)
-#define WATCHDOG      true
+//#define WATCHDOG
 
 #include <RFM69.h>
 #include <SPI.h>
@@ -54,7 +54,7 @@
 #define HIGH_POWER    true
 // RFM69 force RC recalibration before transmission (when transmitter is outside and freezing temps are expected)
 // in other words: when amb. temperature difference between transmitter and receiver is substantial (more than >20'C)
-#define RC_RECAL      true
+#define RC_RECAL      false
 
 // AES encryption (or not):
 #define ENCRYPT       true // Set to "true" to use encryption
@@ -143,13 +143,13 @@ void loop() {
     transmitCounter = 0;
     transmitMeasurements();
   }
+  Serial.println(F("Going to power down for ~8s..."));
+  Serial.flush();
+  radio.sleep();
 #ifdef WATCHDOG
   wdt_reset();
   wdt_disable();
 #endif
-  Serial.println(F("Going to power down for ~8s..."));
-  Serial.flush();
-  radio.sleep();
   LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF); // consider narcoleptic https://github.com/brabl2/narcoleptic
   Serial.flush();
   Serial.println(F("Awaken!"));

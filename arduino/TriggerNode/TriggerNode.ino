@@ -33,6 +33,7 @@
 // Use high-power mode?
 #define HIGH_POWER_MODE true
 // Send command continuously (in burst) until ACK received or do it in 60ms intervals. When operating off the battery you should set it to false.
+// Mind that this may disrupt communication of other devices transmitting on the same freq.
 #define BURST_MODE    false
 
 // AES encryption (or not):

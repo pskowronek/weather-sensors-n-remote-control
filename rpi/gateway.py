@@ -55,31 +55,35 @@ def main():
             time.sleep(1)
             # Process packets
             for packet in radio.get_packets():
-                logging.info("Got packet!")
-                logging.debug("Raw packet data: %s", packet);
-                data = bytearray(packet.data).decode()
-                data_dict = dict(x.split(':') for x in data.split(','))
-                points = [{
-                    'measurement': 'readings',
-                    'time': datetime.datetime.utcnow(),
-                    'tags': {
-                        'network': network_id,
-                        'node': packet.sender,
-                        'name': data_dict.get('nm', str(packet.sender))
-                    },
-                    'fields': {
-                        'temp': int(data_dict.get('t', 0)) / 10,  # temp was *10 to avoid doing float -> str on arduino side
-                        'pressure': int(data_dict.get('p', 0)),
-                        'humidity': float(data_dict.get('h', 0)),
-                        'lumi': int(data_dict.get('l', -1)),
-                        'voltage': int(data_dict.get('v')) / 1000,  # mV to V
-                        'rssi-node': int(data_dict.get('r'), 0),  # last known RSSI as seen on node side
-                        'rssi-gw': packet.RSSI
-                    }
-                }]
-                client.write_points(points)
-                logging.debug("Decoded data as sent to db: %s", json.dumps(points, default=str))
-                logging.info("Readings data sent to db!")
+                try:
+                    logging.info("Got packet!")
+                    logging.debug("Raw packet data: %s", packet)
+                    data = bytearray(packet.data).decode()
+                    data_dict = dict(x.split(':') for x in data.split(','))
+                    points = [{
+                        'measurement': 'readings',
+                        'time': datetime.datetime.utcnow(),
+                        'tags': {
+                            'network': network_id,
+                            'node': packet.sender,
+                            'name': data_dict.get('nm', str(packet.sender))
+                        },
+                        'fields': {
+                            'temp': int(data_dict.get('t', 0)) / 10,  # temp was *10 to avoid doing float -> str on arduino side
+                            'pressure': int(data_dict.get('p', 0)),
+                            'humidity': float(data_dict.get('h', 0)),
+                            'lumi': int(data_dict.get('l', -1)),
+                            'voltage': int(data_dict.get('v')) / 1000,  # mV to V
+                            'rssi-node': int(data_dict.get('r'), 0),  # last known RSSI as seen on node side
+                            'rssi-gw': packet.RSSI,
+                            'uptime': int(data_dict.get('u'), 0),
+                        }
+                    }]
+                    client.write_points(points)
+                    logging.debug("Decoded data as sent to db: %s", json.dumps(points, default=str))
+                    logging.info("Readings data sent to db!")
+                except:
+                    logging.error("Unexpected exception: %s", sys.exc_info()[0])
 
 
 def signal_hook(*args):

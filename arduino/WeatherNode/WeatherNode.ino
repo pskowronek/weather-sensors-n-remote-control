@@ -40,13 +40,13 @@
 
 #define NETWORK_ID    1
 #define THIS_NODE_ID  2
-// A short name that could be used for data visualization, use alphanumeric & us-ascii only, don't use commas!
+// A short name (max 11 chars) that could be used for data visualization, use alphanumeric & us-ascii only, don't use commas!
 // Please do remember that the whole packet max data size is 61 bytes and it must accomodate sensor readings.
 #define THIS_NODE_NAME "hall"
 #define GATEWAY_ID    1
 
-// A packet format: nm -> name, t -> temp*10, p -> pressure (hPa), h -> humidity, l -> lux, v -> voltage (mV), r -> last RSSI
-#define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,l:%d,v:%d,r:%d"
+// A packet format: nm -> name, t -> temp*10, p -> pressure (hPa), h -> humidity, l -> lux, v -> voltage (mV), r -> last RSSI, u -> uptime (in days)
+#define PACKET_FORMAT "nm:%s,t:%d,p:%d,h:%d,l:%d,v:%d,r:%d,u:%d"
 
 // RFM69 frequency
 #define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
@@ -89,6 +89,10 @@
 // The analog pin to set high for turning ON, to set low when OFF. Use NPN transitor to control external device.
 #define PIN_SWITCH    A1
 
+// Turn off PIN_SWITCH while sending measurements (if controlled device is powered from the same power source it
+// may help to stay within max current limits)
+#define TURN_OFF_WHILE_SENDING false
+
 // RFM69 radio
 RFM69 radio;
 // BME280 sensor
@@ -105,6 +109,8 @@ int transmitCounter = SEND_EVERY_N_8S; // start transmission when it is powered 
 byte turnOffCountDown = 0;
 // Last RSSI
 int lastRSSI = 0;
+// to more-or-less keep time while sleeping (for uptime) - in ms
+long sleepTimeCounter = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -137,6 +143,7 @@ void loop() {
     }
     handleReceives(); // wake up radio and check if something is received
     LowPower.powerDown(SLEEP_120MS, ADC_OFF, BOD_OFF);  // briefly power down with radio on to let it catch something :)
+    sleepTimeCounter += 120;
     handleReceives(); // re-check if something was received
   }
   if (transmitCounter > SEND_EVERY_N_8S) {
@@ -153,7 +160,8 @@ void loop() {
   wdt_reset();
   wdt_disable();
 #endif
-  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF); // consider narcoleptic https://github.com/brabl2/narcoleptic
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF); // consider narcoleptic https://github.com/brabl2/narcoleptic (and avoid sleepTimeCounter)
+  sleepTimeCounter += 8*1000;
   Serial.flush();
   Serial.println(F("Awaken!"));
   Serial.flush();
@@ -202,6 +210,9 @@ void transmitMeasurements() {
   char buffer[61];
   fillMeasurements(&buffer[0]);
   Serial.println(F("Going to send data!"));
+  if (TURN_OFF_WHILE_SENDING && turnOffCountDown != 0) {
+      analogWrite(PIN_SWITCH, 0);
+  }
   if (USE_ACK) {
     if (radio.sendWithRetry(GATEWAY_ID, buffer, strlen(buffer), ACK_RETRIES, ACK_WAIT)) {
       Serial.println(F("ACK received! Good."));
@@ -211,6 +222,9 @@ void transmitMeasurements() {
   } else {
     radio.send(GATEWAY_ID, buffer, strlen(buffer));
     Serial.println(F("Data sent w/o requesting ACK"));
+  }
+  if (TURN_OFF_WHILE_SENDING && turnOffCountDown != 0) {
+      analogWrite(PIN_SWITCH, 255);
   }
   lastRSSI = radio.readRSSI(false);
   Serial.flush();
@@ -225,6 +239,7 @@ void fillMeasurements(char* buffer) {
       lumi = event.light;
     }
   #endif
+  int uptime = (millis() + sleepTimeCounter) / (3600*24);
   bme.setMode(MODE_FORCED);
   sprintf(buffer, PACKET_FORMAT,
       THIS_NODE_NAME,
@@ -233,7 +248,8 @@ void fillMeasurements(char* buffer) {
       (int)bme.readFloatHumidity(),
       lumi,
       (int)readVcc(),
-      lastRSSI); 
+      lastRSSI,
+      uptime); 
   bme.setMode(MODE_SLEEP);
   Serial.print(F("Got the following measurements: "));
   Serial.println(buffer);

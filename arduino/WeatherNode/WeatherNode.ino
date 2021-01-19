@@ -239,7 +239,7 @@ void fillMeasurements(char* buffer) {
       lumi = event.light;
     }
   #endif
-  int uptime = (millis() + sleepTimeCounter) / (3600*24);
+  int uptime = (millis() + sleepTimeCounter) / (1000*3600*24);
   bme.setMode(MODE_FORCED);
   sprintf(buffer, PACKET_FORMAT,
       THIS_NODE_NAME,

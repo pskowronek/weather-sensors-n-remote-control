@@ -73,10 +73,10 @@ def main():
                             'pressure': int(data_dict.get('p', 0)),
                             'humidity': float(data_dict.get('h', 0)),
                             'lumi': int(data_dict.get('l', -1)),
-                            'voltage': int(data_dict.get('v')) / 1000,  # mV to V
-                            'rssi-node': int(data_dict.get('r'), 0),  # last known RSSI as seen on node side
+                            'voltage': int(data_dict.get('v', 0)) / 1000,  # mV to V
+                            'rssi-node': int(data_dict.get('r', 0)),  # last known RSSI as seen on node side
                             'rssi-gw': packet.RSSI,
-                            'uptime': int(data_dict.get('u'), 0),
+                            'uptime': int(data_dict.get('u', 0)),
                         }
                     }]
                     client.write_points(points)

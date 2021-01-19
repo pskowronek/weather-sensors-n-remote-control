@@ -132,7 +132,7 @@ void setup() {
 void loop() {
 
 #ifdef WATCHDOG
-  wdt_enable(WDTO_3S);
+  wdt_enable(WDTO_4S);
 #endif
   if (ACCEPT_COMMANDS) {
     if (turnOffCountDown > 0) {

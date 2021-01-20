@@ -21,7 +21,7 @@
 //#define USE_LUMI_SENSOR
 
 // whether to unleash built-in watchdog to reboot when it appears the device is not responding (transmitting)
-// BE WARNED - on Arduino Pro Mini it didn't work for me. Further investigation required (faulty bootloader? LowPower.h?)
+// BE WARNED - on Arduino Pro Mini it didn't work for me (boot loop) - https://github.com/arduino/ArduinoCore-avr/issues/150
 //#define WATCHDOG
 
 #include <RFM69.h>

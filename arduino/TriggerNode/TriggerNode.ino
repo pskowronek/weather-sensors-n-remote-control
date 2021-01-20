@@ -10,7 +10,7 @@
  *
  * If ACK is not received or ACK is disabled either on trigger node or target node, then it continuesly sends the command.
  * 
- * Of crouse code can be extended to work with tact switches/buttons or do sth programatically.
+ * Of course code can be extended to work with tact switches/buttons or do sth programatically.
  * 
  * Author: Piotr Skowronek, piotr@skowro.net
  * License: Apache License, version 2.0
@@ -30,8 +30,11 @@
 
 // RFM69 frequency
 #define FREQUENCY     RF69_433MHZ // or RF69_915MHZ
-// Use high-power mode?
+// RFM69 mode - rfm69hw is high-power (and you can lower the power output by setting it to false), rfm69cw is NOT high-power and you have to set it to false!
 #define HIGH_POWER_MODE true
+// RFM69 force RC recalibration before transmission (when transmitter is outside and freezing temps are expected)
+// in other words: when amb. temperature difference between transmitter and receiver is substantial (more than >20'C)
+#define RC_RECAL      true
 // Send command continuously (in burst) until ACK received or do it in 60ms intervals. When operating off the battery you should set it to false.
 // Mind that this may disrupt communication of other devices transmitting on the same freq.
 #define BURST_MODE    false
@@ -93,6 +96,9 @@ void loop() {
       analogWrite(PIN_LED, 0);
       LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF);
       LowPower.powerDown(SLEEP_500MS, ADC_OFF, BOD_OFF);
+      if (RC_RECAL) {
+        radio.rcCalibration();
+      }
       radio.receiveDone(); // awake radio
       Serial.println(F("Awaken!"));
       Serial.flush();
@@ -116,7 +122,9 @@ void loop() {
 bool sendCommand() {
   analogWrite(PIN_LED, 255);
   Serial.print(F("Going to send the following command: "));
-  Serial.println(CMD_TO_SEND);
+  Serial.print(CMD_TO_SEND);
+  Serial.print(" to node: ");
+  Serial.println(TARGET_ID);
   bool ack = false;  
 
   if (USE_ACK) {

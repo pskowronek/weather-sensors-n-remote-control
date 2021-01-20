@@ -18,8 +18,10 @@
  */
 
 // whether TSL2561 lumi sensor is connected
-#define USE_LUMI_SENSOR
+//#define USE_LUMI_SENSOR
+
 // whether to unleash built-in watchdog to reboot when it appears the device is not responding (transmitting)
+// BE WARNED - on Arduino Pro Mini it didn't work for me. Further investigation required (faulty bootloader? LowPower.h?)
 //#define WATCHDOG
 
 #include <RFM69.h>
@@ -54,7 +56,7 @@
 #define HIGH_POWER    true
 // RFM69 force RC recalibration before transmission (when transmitter is outside and freezing temps are expected)
 // in other words: when amb. temperature difference between transmitter and receiver is substantial (more than >20'C)
-#define RC_RECAL      false
+#define RC_RECAL      true
 
 // AES encryption (or not):
 #define ENCRYPT       true // Set to "true" to use encryption
@@ -91,7 +93,7 @@
 
 // Turn off PIN_SWITCH while sending measurements (if controlled device is powered from the same power source it
 // may help to stay within max current limits)
-#define TURN_OFF_WHILE_SENDING false
+#define TURN_OFF_WHILE_SENDING true
 
 // RFM69 radio
 RFM69 radio;
@@ -110,7 +112,7 @@ byte turnOffCountDown = 0;
 // Last RSSI
 int lastRSSI = 0;
 // to more-or-less keep time while sleeping (for uptime) - in ms
-long sleepTimeCounter = 0;
+unsigned long sleepTimeCounter = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -130,7 +132,6 @@ void setup() {
 }
 
 void loop() {
-
 #ifdef WATCHDOG
   wdt_enable(WDTO_4S);
 #endif
@@ -239,7 +240,7 @@ void fillMeasurements(char* buffer) {
       lumi = event.light;
     }
   #endif
-  int uptime = (millis() + sleepTimeCounter) / (1000*3600*24);
+  int uptime = (millis() + sleepTimeCounter) / (1000L*3600*24);
   bme.setMode(MODE_FORCED);
   sprintf(buffer, PACKET_FORMAT,
       THIS_NODE_NAME,

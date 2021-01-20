@@ -143,7 +143,14 @@ void loop() {
       radio.rcCalibration();
     }
     handleReceives(); // wake up radio and check if something is received
+#ifdef WATCHDOG
+    wdt_reset();
+    wdt_disable();
+#endif
     LowPower.powerDown(SLEEP_120MS, ADC_OFF, BOD_OFF);  // briefly power down with radio on to let it catch something :)
+#ifdef WATCHDOG
+    wdt_enable(WDTO_4S);
+#endif
     sleepTimeCounter += 120;
     handleReceives(); // re-check if something was received
   }

@@ -1,0 +1,26 @@
+[Unit]
+Description=weather-gateway
+After=network.target
+# Hopefully it should be enforced soon: https://github.com/systemd/systemd/issues/5097
+Wants=time-sync.target
+
+[Service]
+ExecStart=/home/pi/weather-sensors-n-remote-control/rpi/gateway.sh
+WorkingDirectory=/home/pi/weather-sensors-n-remote-control
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+TimeoutStartSec=20s
+TimeoutStopSec=20s
+StartLimitInterval=5min
+StartLimitBurst=5
+# Turn it on only when you are absolutely and positively sure that this service works tip-top, otherwise you may experience reboot loop
+#StartLimitAction=reboot
+# Watchdog unleashed.
+WatchdogSec=120s
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

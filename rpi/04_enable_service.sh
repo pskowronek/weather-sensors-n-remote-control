@@ -12,3 +12,4 @@ echo "Going to enable gateway.service to start on boot time..."
 sudo systemctl enable gateway.service
 
 echo "Done. You can restart RPi to see if it works!"
+echo "To check logs from the service run: tail -f /var/log/syslog | grep gateway.sh"

@@ -6,7 +6,7 @@ Wants=time-sync.target
 
 [Service]
 ExecStart=/home/pi/weather-sensors-n-remote-control/rpi/gateway.sh
-WorkingDirectory=/home/pi/weather-sensors-n-remote-control
+WorkingDirectory=/home/pi/weather-sensors-n-remote-control/rpi
 StandardOutput=inherit
 StandardError=inherit
 Restart=always

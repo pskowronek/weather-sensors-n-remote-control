@@ -21,7 +21,7 @@ curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD
 curl -XPOST "http://localhost:8086/query?db=$DATABASE_NAME&u=$USER_NAME&p=$USER_PASSWD" --data-urlencode 'q=select * from $DATABASE_ROW_NAME'
 
 echo "InfluxDB should be up and ready"
-echo "If you need to migrate InfluxDB data then the database files are kept here: /var/lib/influxdb"
+echo "If you need to migrate InfluxDB data then the database files are kept here: /var/data/influxdb"
 echo
 echo "Now open your favorite browser and navigate to: http://[rpi-ip]:3000/ and configure datasource and set up your dashboards"
 echo "If you need to reconfigure Grafana, then edit /etc/grafana/grafana.ini and restart the service using: sudo systemctl restart grafana-server

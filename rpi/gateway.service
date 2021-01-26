@@ -1,8 +1,8 @@
 [Unit]
 Description=weather-gateway
-After=network.target
+After=network.target docker.service
 # Hopefully it should be enforced soon: https://github.com/systemd/systemd/issues/5097
-Wants=time-sync.target
+Wants=time-sync.target docker.service
 
 [Service]
 ExecStart=/home/pi/weather-sensors-n-remote-control/rpi/gateway.sh
@@ -11,10 +11,10 @@ StandardOutput=inherit
 StandardError=inherit
 Restart=always
 User=pi
-TimeoutStartSec=20s
+TimeoutStartSec=60s
 TimeoutStopSec=20s
 StartLimitInterval=5min
-StartLimitBurst=5
+StartLimitBurst=10
 # Turn it on only when you are absolutely and positively sure that this service works tip-top, otherwise you may experience reboot loop
 #StartLimitAction=reboot
 # Watchdog unleashed.

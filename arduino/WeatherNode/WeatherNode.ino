@@ -187,9 +187,7 @@ void fillMeasurements(char* buffer) {
   #ifdef USE_LUMI_SENSOR
     sensors_event_t event;
     tsl.getEvent(&event);
-    if (event.light) {
-      lumi = event.light;
-    }
+    lumi = event.light;
   #endif
   int uptime = (millis() + sleepTimeCounter) / (1000L*3600*24);
   bme.setMode(MODE_FORCED);

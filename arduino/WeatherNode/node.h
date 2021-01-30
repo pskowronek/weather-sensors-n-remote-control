@@ -14,7 +14,7 @@
 
 #define NETWORK_ID    1
 #define THIS_NODE_ID  2
-// A short name (max 11 chars) that could be used for data visualization, use alphanumeric & us-ascii only, don't use commas!
+// A short name (max 8 chars if Lumi is on) that could be used for data visualization, use alphanumeric & us-ascii only, don't use commas!
 // Please do remember that the whole packet max data size is 61 bytes and it must accomodate sensor readings.
 #define THIS_NODE_NAME "hall"
 #define GATEWAY_ID    1

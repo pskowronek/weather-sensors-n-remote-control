@@ -116,7 +116,7 @@
             {
               "key": "name",
               "operator": "!=",
-              "value": "outside-south"
+              "value": "out-sth"
             }
           ]
         }
@@ -313,7 +313,7 @@
             {
               "key": "name",
               "operator": "!=",
-              "value": "outside-south"
+              "value": "out-sth"
             }
           ]
         }
@@ -614,6 +614,7 @@
             "mode": "thresholds"
           },
           "custom": {},
+          "decimals": 1,
           "mappings": [],
           "max": 66,
           "thresholds": {
@@ -669,8 +670,8 @@
           "measurement": "readings",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"temp\") FROM \"readings\" WHERE (\"name\" = 'outside-south') AND $timeFilter",
-          "rawQuery": true,
+          "query": "SELECT last(\"temp\") FROM \"readings\" WHERE (\"name\" = 'out-sth') AND $timeFilter",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -691,7 +692,7 @@
             {
               "key": "name",
               "operator": "=",
-              "value": "outside-south"
+              "value": "out-sth"
             }
           ]
         }
@@ -785,7 +786,7 @@
             {
               "key": "name",
               "operator": "=",
-              "value": "outside-south"
+              "value": "out-sth"
             }
           ]
         }
@@ -808,7 +809,7 @@
             {
               "from": "",
               "id": 1,
-              "text": "",
+              "text": "0",
               "to": "",
               "type": 1,
               "value": "-1"
@@ -816,7 +817,6 @@
           ],
           "max": 40000,
           "min": 0,
-          "noValue": "N/A",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -894,7 +894,7 @@
             {
               "key": "name",
               "operator": "=",
-              "value": "outside-south"
+              "value": "out-sth"
             }
           ]
         }
@@ -1101,6 +1101,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:132",
           "format": "none",
           "label": "C' / rH",
           "logBase": 1,
@@ -1109,6 +1110,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:133",
           "format": "short",
           "label": "Temp",
           "logBase": 1,
@@ -1246,6 +1248,7 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:370",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -1254,6 +1257,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:673",
           "colorMode": "warning",
           "fill": true,
           "line": true,
@@ -1262,6 +1266,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:679",
           "colorMode": "warning",
           "fill": true,
           "line": true,
@@ -1270,6 +1275,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:685",
           "colorMode": "ok",
           "fill": true,
           "line": true,
@@ -1278,6 +1284,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:691",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -1286,6 +1293,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:697",
           "colorMode": "custom",
           "fill": true,
           "fillColor": "rgba(1, 42, 66, 0.95)",
@@ -1315,6 +1323,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:568",
           "format": "none",
           "label": "ppm",
           "logBase": 1,
@@ -1323,6 +1332,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:569",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1351,7 +1361,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 11,
         "x": 0,
         "y": 26
@@ -1447,6 +1457,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:657",
           "decimals": 0,
           "format": "locale",
           "label": "hPa",
@@ -1456,6 +1467,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:658",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1485,7 +1497,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 11,
         "x": 11,
         "y": 26
@@ -1562,7 +1574,13 @@
             {
               "key": "name",
               "operator": "=",
-              "value": "outside-south"
+              "value": "out-sth"
+            },
+            {
+              "condition": "AND",
+              "key": "lumi",
+              "operator": ">",
+              "value": "-1"
             }
           ]
         }
@@ -1587,6 +1605,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:657",
           "format": "lux",
           "label": "Lux",
           "logBase": 10,
@@ -1595,6 +1614,156 @@
           "show": true
         },
         {
+          "$$hashKey": "object:658",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "lux"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 11,
+        "x": 11,
+        "y": 31
+      },
+      "hiddenSeries": false,
+      "id": 31,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": false
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Lux $tag_name",
+          "groupBy": [
+            {
+              "params": [
+                "1d"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "name"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "readings",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "lumi"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "name",
+              "operator": "=",
+              "value": "out-sth"
+            },
+            {
+              "condition": "AND",
+              "key": "lumi",
+              "operator": ">",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "30d",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Luminosity Daily Max",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:657",
+          "format": "lux",
+          "label": "Lux",
+          "logBase": 10,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:658",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1614,7 +1783,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 36
       },
       "id": 21,
       "title": "Tech",
@@ -1639,7 +1808,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 37
       },
       "hiddenSeries": false,
       "id": 6,
@@ -1714,6 +1883,7 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:927",
           "colorMode": "ok",
           "fill": true,
           "line": true,
@@ -1722,6 +1892,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:933",
           "colorMode": "warning",
           "fill": true,
           "line": true,
@@ -1730,6 +1901,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:939",
           "colorMode": "warning",
           "fill": true,
           "line": true,
@@ -1738,6 +1910,7 @@
           "yaxis": "left"
         },
         {
+          "$$hashKey": "object:945",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -1765,6 +1938,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:773",
           "format": "none",
           "label": "V",
           "logBase": 1,
@@ -1773,6 +1947,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:774",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1801,15 +1976,15 @@
               }
             ]
           },
-          "unit": "d"
+          "unit": "days"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 10,
         "x": 12,
-        "y": 35
+        "y": 37
       },
       "id": 30,
       "options": {
@@ -1901,5 +2076,5 @@
   "timezone": "",
   "title": "weather-sensors-n-remote-control",
   "uid": "4kSWEOWRk",
-  "version": 61
+  "version": 69
 }

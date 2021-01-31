@@ -22,7 +22,7 @@ The project consists of two main parts (folders):
 List of parts you will need:
 - Arduino Mini Pro or similar (preferred 3V 8MHz for battery life-span)
 - RPi ZeroW (or similar)
-- RFM69 modules for 433Mhz connectivity
+- RFM69 modules for 433MHz connectivity
 - BME280 modules for temp, humidity & atm pressure
 - TSL2561 modules for luminosity (optional)
 - a couple of wires, battery housing etc

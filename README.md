@@ -8,13 +8,13 @@ _Language versions:_
 
 # Weather sensors & remote control
 
-The project is to measure temperature, atmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors sent their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB.
+The project is to measure temperature, atmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors send their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB. Arduino sensors can be optionally used to turn on external devices (analog pin 1 is being set to high when trigger node sends a command to do so).
 
 The project consists of two main parts (folders):
 
 - Arduino - two Arduino Projects:
-	- WeatherNode - a code for sensor and control (optionally)
-	- TriggerNode - a code for triggering/control something via WeatherNode
+	- WeatherNode - sensor and switch devices (optionally)
+	- TriggerNode - triggering remotely switch on sensors running WeatherNode
 - rpi - installation scripts and python program (that can be set as a Service) to collect data from Arduino sensors
 
 RPi part can be supplied with air quality measurements from this [project](https://github.com/pskowronek/home-air-quality-and-assistant) (take a look [here](https://github.com/pskowronek/home-air-quality-and-assistant/blob/master/influxdb-reporting.sh)).

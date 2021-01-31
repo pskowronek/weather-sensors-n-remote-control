@@ -8,14 +8,16 @@ _Language versions:_
 
 # Weather sensors & remote control
 
-The project is to measure temperature, athmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors sent their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB.
+The project is to measure temperature, atmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors sent their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB.
 
 The project consists of two main parts (folders):
 
-- arduino - two Arduino Projects:
+- Arduino - two Arduino Projects:
 	- WeatherNode - a code for sensor and control (optionally)
-	- TriggerNode - a code for triggerring/control something via WeatherNode
-- rpi - installation scripts and python program (that can be set as a Service) to collect data from arduino sensors
+	- TriggerNode - a code for triggering/control something via WeatherNode
+- rpi - installation scripts and python program (that can be set as a Service) to collect data from Arduino sensors
+
+RPi part can be supplied with air quality measurements from this [project](https://github.com/pskowronek/home-air-quality-and-assistant) (take a look [here](https://github.com/pskowronek/home-air-quality-and-assistant/blob/master/influxdb-reporting.sh)).
 
 ## Hardware
 
@@ -35,7 +37,7 @@ List of software/libraries you will need:
 
 ## Wiring
 
-For guidence how to connect modules to Arduino or RPi refer to [arduino/WeatherNode/WeatherNode.ino](https://github.com/pskowronek/weather-sensors-n-remote-control/blob/main/arduino/WeatherNode/WeatherNode.ino) and this [page](https://rpi-rfm69.readthedocs.io/en/latest/hookup.html).
+For guidance how to connect modules to Arduino or RPi refer to [Arduino/WeatherNode/WeatherNode.ino](https://github.com/pskowronek/weather-sensors-n-remote-control/blob/main/arduino/WeatherNode/WeatherNode.ino) and this [page](https://rpi-rfm69.readthedocs.io/en/latest/hookup.html).
 
 If you intend to use batteries to power Arduino sensors then you need to modify your Arduino to lower current consumption - removal of power LED is a must. Use Vcc pin to provide 3V directly (if you plan to use 2xAAs).
 To further extend battery life you may want to modify fuses on your Arduino so it could run below 2.8V (even as low as 1.8V).

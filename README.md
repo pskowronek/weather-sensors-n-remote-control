@@ -22,6 +22,7 @@ RPi part can be supplied with air quality measurements from this [project](https
 ## Hardware
 
 List of parts you will need:
+
 - Arduino Mini Pro or similar (preferred 3V 8MHz for battery life-span)
 - RPi ZeroW (or similar)
 - RFM69 modules for 433MHz connectivity
@@ -32,6 +33,7 @@ List of parts you will need:
 ## Software
 
 List of software/libraries you will need:
+
 - [Arduino IDE](https://www.arduino.cc/en/software)
 - libraries for WeatherNode & TiggerNode (via Arduino library): RFM69, SparkFunBME280, Adafruit_TSL2561, LowPower
 
@@ -40,7 +42,7 @@ List of software/libraries you will need:
 For guidance how to connect modules to Arduino or RPi refer to [Arduino/WeatherNode/WeatherNode.ino](https://github.com/pskowronek/weather-sensors-n-remote-control/blob/main/arduino/WeatherNode/WeatherNode.ino) and this [page](https://rpi-rfm69.readthedocs.io/en/latest/hookup.html).
 
 If you intend to use batteries to power Arduino sensors then you need to modify your Arduino to lower current consumption - removal of power LED is a must. Use Vcc pin to provide 3V directly (if you plan to use 2xAAs).
-To further extend battery life you may want to modify fuses on your Arduino so it could run below 2.8V (even as low as 1.8V).
+To further extend battery life you may want to reconfigure fuses on your Arduino so it could run below 2.8V, even as low as 1.8V (requires bootloader modifications).
 
 ## Screenshots / Photos
 

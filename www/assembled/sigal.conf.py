@@ -7,7 +7,7 @@
 # Gallery title. Can be set here or as the '--title' option of the `sigal
 # build` command, or in the 'index.md' file of the source directory.
 # The priority order is: cli option > settings file > index.md file
-title = "Lightning camera trigger"
+title = "Weather sensors & remote control"
 
 # ---------------------
 # General configuration

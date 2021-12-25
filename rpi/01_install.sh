@@ -44,4 +44,4 @@ echo "Going to install gateway.py requirements..."
 pip3 install -r requirements.txt
 
 echo "Now you must re-login to update user groups (you may also want to reboot) and run 02_setup.sh then."
-
+echo "Please remember to turn on SPI by running 'sudo raspi-config' - you may want to do it now before reboot."

@@ -46,8 +46,8 @@ To further extend battery life you may want to reconfigure fuses on your Arduino
 
 ## Installation (RPi)
 
-This project contains installation scripts unde `rpi` directory: [01_install.sh](tree/master/rpi/01_install.sh), [02_setup.sh](tree/master/rpi/02_setup.sh),
-[03_run.sh](tree/master/rpi/03_run.sh) and finally [04_enable_service.sh](tree/master/rpi/04_enable_service.sh). Hopefully this should get you running.
+This project contains installation scripts unde `rpi` directory: [01_install.sh](tree/main/rpi/01_install.sh), [02_setup.sh](tree/main/rpi/02_setup.sh),
+[03_run.sh](tree/main/rpi/03_run.sh) and finally [04_enable_service.sh](tree/main/rpi/04_enable_service.sh). Hopefully this should get you running.
 
 ## Screenshots / Photos
 

@@ -18,7 +18,7 @@
  */
 
 // To configure the node you have to edit (or duplicate) node.h and include it here:
-#include "node_2.h"
+#include "node.h"
 
 #include <RFM69.h>
 #include <SPI.h>

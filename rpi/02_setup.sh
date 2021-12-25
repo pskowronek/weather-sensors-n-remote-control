@@ -15,6 +15,8 @@ cd dockerfiles
 docker-compose up --build -d
 cd -
 
+echo "Let's wait 10s for InfluxDB to start up..."
+sleep 10s
 echo "Going to init db..."
 curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD" --data-urlencode "q=CREATE DATABASE "$DATABASE_NAME""
 curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD" --data-urlencode 'q=SHOW DATABASES'

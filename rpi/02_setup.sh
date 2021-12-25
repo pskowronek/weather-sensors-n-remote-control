@@ -16,9 +16,9 @@ docker-compose up --build -d
 cd -
 
 echo "Going to init db..."
-curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD" --data-urlencode 'q=CREATE DATABASE "$DATABASE_NAME"'
+curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD" --data-urlencode "q=CREATE DATABASE "$DATABASE_NAME""
 curl -XPOST "http://localhost:8086/query?u=$ADMIN_USER_NAME&p=$ADMIN_USER_PASSWD" --data-urlencode 'q=SHOW DATABASES'
-curl -XPOST "http://localhost:8086/query?db=$DATABASE_NAME&u=$USER_NAME&p=$USER_PASSWD" --data-urlencode 'q=select * from $DATABASE_ROW_NAME'
+curl -XPOST "http://localhost:8086/query?db=$DATABASE_NAME&u=$USER_NAME&p=$USER_PASSWD" --data-urlencode "q=select * from $DATABASE_ROW_NAME"
 
 echo "InfluxDB should be up and ready"
 echo "If you need to migrate InfluxDB data then the database files are kept here: /var/data/influxdb"

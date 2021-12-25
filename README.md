@@ -44,6 +44,11 @@ For guidance how to connect modules to Arduino or RPi refer to [Arduino/WeatherN
 If you intend to use batteries to power Arduino sensors then you need to modify your Arduino to lower current consumption - removal of power LED is a must. Use Vcc pin to provide 3V directly (if you plan to use 2xAAs).
 To further extend battery life you may want to reconfigure fuses on your Arduino so it could run below 2.8V, even as low as 1.8V (requires bootloader modifications).
 
+## Installation (RPi)
+
+This project contains installation scripts unde `rpi` directory: [01_install.sh](../tree/master/rpi/01_install.sh), [02_setup.sh](../tree/master/rpi/02_setup.sh),
+[03_run.sh](../tree/master/rpi/03_run.sh) and finally [04_enable_service.sh](../tree/master/rpi/04_enable_service.sh). Hopefully this should get you running.
+
 ## Screenshots / Photos
 
 ### Screenshots

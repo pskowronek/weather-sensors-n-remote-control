@@ -30,8 +30,15 @@ sh /tmp/get-docker.sh
 sudo usermod -aG docker pi
 
 echo "Going to install docker-compose..."
-sudo apt install python3-pip -y
-sudo pip3 install docker-compose
+# Good for Raspbian Buster, no good for Raspbian 11 Bullseye and/or RPi Zero:
+#sudo apt install python3-pip -y
+#sudo pip3 install docker-compose
+
+# Good for Buster and RPi Zero
+DOCKER_COMPOSE_VERSION="2.1.1"
+DOCKER_COMPOSE_ARCH="armv6" # Good for RPi Zero, for others armv7 should be good
+sudo curl -L "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-${DOCKER_COMPOSE_ARCH}" -o /usr/bin/docker-compose
+sudo chmod +x /usr/bin/docker-compose
 
 echo "Going to install gateway.py requirements..."
 pip3 install -r requirements.txt

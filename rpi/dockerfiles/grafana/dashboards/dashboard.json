@@ -75,6 +75,7 @@
         "x": 0,
         "y": 1
       },
+      "hideTimeOverride": true,
       "id": 8,
       "options": {
         "orientation": "auto",
@@ -121,7 +122,7 @@
           ]
         }
       ],
-      "timeFrom": null,
+      "timeFrom": "1h",
       "timeShift": null,
       "title": "Temp Inside",
       "type": "gauge"
@@ -172,6 +173,7 @@
         "x": 4,
         "y": 1
       },
+      "hideTimeOverride": true,
       "id": 12,
       "options": {
         "orientation": "auto",
@@ -237,7 +239,7 @@
           ]
         }
       ],
-      "timeFrom": null,
+      "timeFrom": "1h",
       "timeShift": null,
       "title": "Humidity Inside",
       "type": "gauge"
@@ -272,6 +274,7 @@
         "x": 8,
         "y": 1
       },
+      "hideTimeOverride": true,
       "id": 14,
       "options": {
         "orientation": "auto",
@@ -318,7 +321,7 @@
           ]
         }
       ],
-      "timeFrom": null,
+      "timeFrom": "1h",
       "timeShift": null,
       "title": "Atm Pressure",
       "type": "gauge"
@@ -2055,5 +2058,5 @@
   "timezone": "",
   "title": "weather-sensors-n-remote-control",
   "uid": "4kSWEOWRk",
-  "version": 5
+  "version": 7
 }

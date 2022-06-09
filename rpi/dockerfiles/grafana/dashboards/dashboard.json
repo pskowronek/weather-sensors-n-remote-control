@@ -1,4 +1,46 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.3.6"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,12 +57,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": null,
   "links": [],
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -33,7 +75,7 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -128,7 +170,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -245,7 +287,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -327,7 +369,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -419,7 +461,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -507,7 +549,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -597,7 +639,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -610,7 +652,7 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -706,7 +748,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -800,7 +842,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -909,7 +951,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -926,7 +968,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "${DS_INFLUXDB}",
       "decimals": 1,
       "fieldConfig": {
         "defaults": {
@@ -1130,7 +1172,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -1344,7 +1386,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -1477,7 +1519,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1622,7 +1664,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1765,7 +1807,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1781,7 +1823,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1943,7 +1985,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "${DS_INFLUXDB}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -2058,5 +2100,5 @@
   "timezone": "",
   "title": "weather-sensors-n-remote-control",
   "uid": "4kSWEOWRk",
-  "version": 7
+  "version": 8
 }

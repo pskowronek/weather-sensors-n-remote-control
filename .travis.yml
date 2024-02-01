@@ -1,0 +1,13 @@
+language: python
+dist: jammy
+
+python:
+  - "3.9"
+
+before_install: cd rpi
+
+install:
+  - pip install flake8
+
+script:
+  - make check

@@ -6,7 +6,7 @@ _Language versions:_
 [![FR](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-FR.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=fr&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
 [![ES](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-ES.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=es&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
 
-# Weather sensors & remote control [![Build Status](https://travis-ci.com/pskowronek/weather-sensors-n-remote-control.svg?branch=main)](https://app.travis-ci.com/github/pskowronek/weather-sensors-n-remote-control)
+# Weather sensors & remote control [![Build Status](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=main)](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control)
 
 The project is to measure temperature, atmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors send their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB. Arduino sensors can be optionally used to turn on external devices (analog pin 1 is being set to high when trigger node sends a command to do so).
 

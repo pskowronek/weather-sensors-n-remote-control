@@ -8,6 +8,8 @@ _Language versions:_
 
 # Weather sensors & remote control [![Build Status](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=main)](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control)
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/piosko)
+
 The project is to measure temperature, atmospheric air pressure, humidity and luminosity by using arduino-powered sensors. Sensors send their data every ~15m (configurable) by using RFM69 modules and collected by using RPi. RPi is also used to visualize data by using Grafana and InfluxDB. Arduino sensors can be optionally used to turn on external devices (analog pin 1 is being set to high when trigger node sends a command to do so).
 
 The project consists of two main parts (folders):

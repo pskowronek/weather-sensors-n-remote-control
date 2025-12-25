@@ -1,11 +1,3 @@
-_Language versions:_
-
-[![EN](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-US.png)](https://github.com/pskowronek/weather-sensors-n-remote-control) 
-[![PL](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-PL.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=pl&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
-[![DE](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-DE.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=de&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
-[![FR](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-FR.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=fr&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
-[![ES](https://github.com/pskowronek/weather-sensors-n-remote-control/raw/main/www/flags/lang-ES.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=es&u=https://github.com/pskowronek/weather-sensors-n-remote-control)
-
 # Weather sensors & remote control [![Build Status](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=main)](https://app.travis-ci.com/pskowronek/weather-sensors-n-remote-control)
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/piosko)
